@@ -3,6 +3,13 @@ from Resources import Resources
 
 class City:
 
+    # Cities will have production of resources and small production of gold.
+    # As the sink of to handle inflation they will be able to spend that on
+    # increase of prosperity - strength of economy
+    # prosperity:
+    # - increases all production
+    # - unlocks production of valuable goods
+
     def __init__(self, name: str):
         self.name = name
         self.neighbours = {}

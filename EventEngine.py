@@ -1,4 +1,5 @@
 import random
+from decimal import Decimal
 from typing import List
 
 from City import City
@@ -29,4 +30,4 @@ class EventEngine:
                 event.handle()
 
     def _get_random_percentage(self) -> Percentage:
-        return Percentage(random.uniform(Percentage.MIN, Percentage.MAX))
+        return Percentage(Decimal(random.uniform(Percentage.MIN, Percentage.MAX)))

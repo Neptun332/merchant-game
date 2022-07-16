@@ -1,23 +1,16 @@
 import random
-from dataclasses import dataclass
 
 from loguru import logger
 
 from City import City
 from Event import Event, EventStateEnum
+from Percentage import Percentage
 from config.TreasureEventConfig import TreasureEventConfig
-
-
-@dataclass(frozen=True)
-class Percentage:
-    MAX = 100
-    MIN = 0
-    value: float
 
 
 class TreasureEvent(Event):
     MESSAGE: str = "In the City {} found chest with gold. To the treasury was added {}"
-    PROBABILITY_EACH_TICK: Percentage = 0.1
+    PROBABILITY_EACH_TICK: Percentage = 0.001
 
     def __init__(self, city: City, event_config: TreasureEventConfig):
         self.city = city
