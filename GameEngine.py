@@ -9,10 +9,15 @@ from TreasureEvent import TreasureEventConfig
 
 class GameEngine:
 
-    def __init__(self, tick_rate: float = None):
+    def __init__(
+            self,
+            map: Map,
+            event_engine: EventEngine,
+            tick_rate: float = None
+    ):
         self.tick_rate = tick_rate
-        self.map = Map()
-        self.event_engine = EventEngine()
+        self.map = map
+        self.event_engine = event_engine
         self.event_engine.create_city_event(
             self.map.cities,
             TreasureEventConfig([200, 300])

@@ -1,4 +1,5 @@
 from Resources import Resources
+from market.LocalMarket import LocalMarket
 
 
 class City:
@@ -10,8 +11,9 @@ class City:
     # - increases all production
     # - unlocks production of valuable goods
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, local_market: LocalMarket):
         self.name = name
+        self.local_market = local_market
         self.neighbours = {}
         self.resources = Resources(
             gold=300,
@@ -19,6 +21,7 @@ class City:
             wood=100,
             stone=100,
         )
+        self.prosperity = 100
 
     def add_neighbour(self, city: 'City', distance: int):
         self.neighbours.update(

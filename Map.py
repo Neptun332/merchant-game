@@ -2,19 +2,23 @@ from typing import Set
 
 from City import City
 from Kingdom import Kingdom
+from market.GlobalMarket import IGlobalMarket
+from market.LocalMarket import LocalMarket
 
 
 class Map:
 
-    def __init__(self):
+    def __init__(self, global_market: IGlobalMarket):
+        self._global_market = global_market
         self._create_hardcoded_kingdoms_with_cities()
 
     def _create_hardcoded_kingdoms_with_cities(self):
-        a = City("A")
-        b = City("B")
-        c = City("C")
-        d = City("D")
-        e = City("E")
+        resources_price = self._global_market.get_recourses_prices()
+        a = City("A", LocalMarket(resources_price))
+        b = City("B", LocalMarket(resources_price))
+        c = City("C", LocalMarket(resources_price))
+        d = City("D", LocalMarket(resources_price))
+        e = City("E", LocalMarket(resources_price))
 
         City.make_them_neighbours(a, b, 10)
         City.make_them_neighbours(a, c, 12)
