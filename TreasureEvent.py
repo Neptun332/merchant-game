@@ -4,13 +4,13 @@ from loguru import logger
 
 from City import City
 from Event import Event, EventStateEnum
-from Percentage import Percentage
+from Probability import Probability
 from config.TreasureEventConfig import TreasureEventConfig
 
 
 class TreasureEvent(Event):
     MESSAGE: str = "In the City {} found chest with gold. To the treasury was added {}"
-    PROBABILITY_EACH_TICK: Percentage = 0.001
+    PROBABILITY_EACH_TICK: Probability = 0.001
 
     def __init__(self, city: City, event_config: TreasureEventConfig):
         self.city = city

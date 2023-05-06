@@ -2,7 +2,8 @@ from abc import ABC, abstractmethod
 from typing import List
 
 from City import City
-from Percentage import Percentage
+from Factor import Factor
+from Probability import Probability
 from market.ResourcesPrice import ResourcesPrice
 
 
@@ -28,11 +29,11 @@ class GlobalMarket(IGlobalMarket):
 
     def update(self):
         inflation = self.calculate_inflation()
-        self.resources_price.increase_price_of_all_by_percentage(inflation)
+        self.resources_price.increase_price_of_all_by_factor(inflation)
 
-    def calculate_inflation(self) -> Percentage:
+    def calculate_inflation(self) -> Factor:
         sum_of_gold = self.get_sum_of_gold_in_every_city(self.cities)
-        return Percentage(1 - (sum_of_gold / self.last_sum_of_gold))
+        return Factor(1 - (sum_of_gold / self.last_sum_of_gold))
 
     def get_recourses_prices(self) -> ResourcesPrice:
         return self.resources_price

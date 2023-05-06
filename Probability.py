@@ -3,7 +3,7 @@ from decimal import Decimal
 
 
 @dataclass(frozen=True)
-class Percentage:
+class Probability:
     MAX = 1
     MIN = 0
     value: Decimal

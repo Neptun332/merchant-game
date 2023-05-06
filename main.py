@@ -10,6 +10,7 @@ if __name__ == "__main__":
     game_engine = GameEngine(
         map=Map(GlobalMarket(ResourcesPrice(Decimal(100), Decimal(100), Decimal(100)))),
         event_engine=EventEngine(),
-        tick_rate=1
+        tick_rate=None,
+        ticks_to_next_month=30
     )
     game_engine.run()
