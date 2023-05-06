@@ -5,7 +5,7 @@ from typing import Tuple
 @dataclass(frozen=True)
 class TreasureEventConfig:
     _MAX_GOLD_RANGE_PARAMS = 2
-    gold_range: Tuple[int]
+    gold_range: Tuple[int, int]
 
     def __post_init__(self):
         if len(self.gold_range) != self._MAX_GOLD_RANGE_PARAMS:

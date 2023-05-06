@@ -1,5 +1,6 @@
-from Resources import Resources
+from CityUpgradeStrategy import CityUpgradeStrategy
 from market.LocalMarket import LocalMarket
+from market.ResourceName import ResourceName
 
 
 class City:
@@ -11,16 +12,11 @@ class City:
     # - increases all production
     # - unlocks production of valuable goods
 
-    def __init__(self, name: str, local_market: LocalMarket):
+    def __init__(self, name: str, local_market: LocalMarket, upgrade_strategy: CityUpgradeStrategy):
         self.name = name
         self.local_market = local_market
+        self.upgrade_strategy = upgrade_strategy
         self.neighbours = {}
-        self.resources = Resources(
-            gold=300,
-            wheat=100,
-            wood=100,
-            stone=100,
-        )
         self.prosperity = 100
 
     def add_neighbour(self, city: 'City', distance: int):
@@ -35,5 +31,9 @@ class City:
         city_a.add_neighbour(city_b, distance)
         city_b.add_neighbour(city_a, distance)
 
-    def add_gold(self, value: int):
-        self.resources.gold += value
+    def update(self):
+        self.local_market.resources_map = self.upgrade_strategy.upgrade(self.local_market.resources_map)
+        self.local_market.resources_map[ResourceName.Gold].add_units(1)
+        self.local_market.resources_map[ResourceName.Wood].add_units(1)
+        self.local_market.resources_map[ResourceName.Stone].add_units(1)
+        self.local_market.update(self.upgrade_strategy.get_demand_of_resources(self.local_market.resources_map))

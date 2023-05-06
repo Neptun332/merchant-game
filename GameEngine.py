@@ -1,10 +1,14 @@
 import time
 
+import pandas as pd
 from loguru import logger
 
 from EventEngine import EventEngine
 from Map import Map
 from TreasureEvent import TreasureEventConfig
+from market.ResourceName import ResourceName
+import matplotlib.pyplot as plt
+
 
 
 class GameEngine:
@@ -22,13 +26,13 @@ class GameEngine:
         self.ticks_to_next_month = ticks_to_next_month
         self.event_engine.create_city_event(
             self.map.cities,
-            TreasureEventConfig([200, 300])
+            TreasureEventConfig((200, 300))
         )
         self.tick = 1
 
     def run(self):
         logger.info("Started GameEngine")
-        while True:
+        while self.tick < 365:
             time_at_beginning_of_tick = time.time()
 
             self._daily_update()
@@ -44,8 +48,15 @@ class GameEngine:
                 )
             self.tick += 1
 
+        a = list(self.map.cities)[0].local_market.resources_map[ResourceName.Gold].history_of_price
+        data = pd.DataFrame.from_dict(a).apply(pd.to_numeric, downcast='float')
+        data.plot()
+        plt.show()
+
     def _daily_update(self):
-        self.event_engine.attempt_triggering_events()
+        for city in self.map.cities:
+            city.update()
+        # self.event_engine.attempt_triggering_events()
 
     def _monthly_update(self):
         pass

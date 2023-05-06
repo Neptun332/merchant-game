@@ -1,24 +1,34 @@
-from typing import Set
+from typing import Set, Dict
 
 from City import City
+from CityUpgradeStrategy import CityUpgradeStrategy
 from Kingdom import Kingdom
 from market.GlobalMarket import IGlobalMarket
 from market.LocalMarket import LocalMarket
+from market.Resource import Resource
+from market.ResourceName import ResourceName
 
 
 class Map:
 
-    def __init__(self, global_market: IGlobalMarket):
+    def __init__(self, global_market: IGlobalMarket, resources_price: Dict[ResourceName, Resource]):
         self._global_market = global_market
-        self._create_hardcoded_kingdoms_with_cities()
+        self._create_hardcoded_kingdoms_with_cities(resources_price)
 
-    def _create_hardcoded_kingdoms_with_cities(self):
-        resources_price = self._global_market.get_recourses_prices()
-        a = City("A", LocalMarket(resources_price))
-        b = City("B", LocalMarket(resources_price))
-        c = City("C", LocalMarket(resources_price))
-        d = City("D", LocalMarket(resources_price))
-        e = City("E", LocalMarket(resources_price))
+    def _create_hardcoded_kingdoms_with_cities(self, resources_map: Dict[ResourceName, Resource]):
+        # TODO add Factory Method or even abstract factory for creating cities
+        upgrade_strategy = CityUpgradeStrategy(
+            {
+                ResourceName.Wood: 100,
+                ResourceName.Stone: 100,
+                ResourceName.Gold: 100,
+            }
+        )
+        a = City("A", LocalMarket(resources_map), upgrade_strategy)
+        b = City("B", LocalMarket(resources_map), upgrade_strategy)
+        c = City("C", LocalMarket(resources_map), upgrade_strategy)
+        d = City("D", LocalMarket(resources_map), upgrade_strategy)
+        e = City("E", LocalMarket(resources_map), upgrade_strategy)
 
         City.make_them_neighbours(a, b, 10)
         City.make_them_neighbours(a, c, 12)
