@@ -12,7 +12,6 @@ from market.ResourceName import ResourceName
 class Resource:
     name: ResourceName
     units: int
-    demand_change_factor: Factor
     price_per_unit: Decimal = None
     history_of_price: List = field(default_factory=list)
 
@@ -22,8 +21,8 @@ class Resource:
     def remove_units(self, units: int):
         self.units -= units
 
-    def update(self, demand: int) -> Decimal:
+    def update(self, demand: int, demand_change_factor: Factor = Factor(Decimal("0.5"))) -> Decimal:
         clipped_demand = numpy.clip(demand, 0, self.units)
-        self.price_per_unit = Decimal((self.units - clipped_demand) / self.demand_change_factor.value)
+        self.price_per_unit = Decimal((self.units - clipped_demand) / demand_change_factor.value)
         self.history_of_price.append(self.price_per_unit)
         return self.price_per_unit
