@@ -19,7 +19,8 @@ class Resource:
     def remove_units(self, units: int):
         self.units -= units
 
-    def update(self, demand: int, demand_change_factor: Factor = Factor(Decimal("0.5"))) -> Decimal:
-        self.price_per_unit = Decimal(max(0, demand * demand_change_factor.value))
+    def update(self, demand: int, utility: int, demand_change_factor: Factor = Factor(Decimal("0.5"))) -> Decimal:
+        price_per_unit = demand-utility * float(demand_change_factor.value)
+        self.price_per_unit = Decimal(max(0, price_per_unit))
         self.history_of_price.append(self.price_per_unit)
         return self.price_per_unit
