@@ -48,7 +48,7 @@ class GameEngine:
                 )
             self.tick += 1
 
-        a = list(self.map.cities)[0].local_market.resources_map[ResourceName.Gold].history_of_price
+        a = list(self.map.cities)[0].local_market.resources_map[ResourceName.Wood].history_of_price
         data = pd.DataFrame.from_dict(a).apply(pd.to_numeric, downcast='float')
         data.plot()
         plt.show()

@@ -2,8 +2,6 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import List
 
-import numpy
-
 from Factor import Factor
 from market.ResourceName import ResourceName
 
@@ -22,7 +20,6 @@ class Resource:
         self.units -= units
 
     def update(self, demand: int, demand_change_factor: Factor = Factor(Decimal("0.5"))) -> Decimal:
-        clipped_demand = numpy.clip(demand, 0, self.units)
-        self.price_per_unit = Decimal((self.units - clipped_demand) / demand_change_factor.value)
+        self.price_per_unit = Decimal(max(0, demand * demand_change_factor.value))
         self.history_of_price.append(self.price_per_unit)
         return self.price_per_unit

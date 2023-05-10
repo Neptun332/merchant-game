@@ -32,8 +32,11 @@ class City:
         city_b.add_neighbour(city_a, distance)
 
     def update(self):
-        self.local_market.resources_map = self.upgrade_strategy.upgrade(self.local_market.resources_map)
+        if self.upgrade_strategy.can_upgrade(self.local_market.resources_map):
+            resource_needed = self.upgrade_strategy.upgrade()
+            self.local_market.remove_resources(resource_needed)
+
         self.local_market.resources_map[ResourceName.Gold].add_units(1)
         self.local_market.resources_map[ResourceName.Wood].add_units(1)
         self.local_market.resources_map[ResourceName.Stone].add_units(1)
-        self.local_market.update(self.upgrade_strategy.get_demand_of_resources(self.local_market.resources_map))
+        self.local_market.update(self.upgrade_strategy.get_demand_of_resources())
