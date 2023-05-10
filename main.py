@@ -13,22 +13,18 @@ if __name__ == "__main__":
         ResourceName.Wood: Resource(
             name=ResourceName.Wood,
             units=10,
-            demand_change_factor=Factor(Decimal(0.5)),
         ),
         ResourceName.Stone: Resource(
             name=ResourceName.Stone,
             units=10,
-            demand_change_factor=Factor(Decimal(0.5)),
         ),
         ResourceName.Wheat: Resource(
             name=ResourceName.Wheat,
             units=10,
-            demand_change_factor=Factor(Decimal(0.5)),
         ),
         ResourceName.Gold: Resource(
             name=ResourceName.Gold,
             units=10,
-            demand_change_factor=Factor(Decimal(0.5)),
         )
 
     }
