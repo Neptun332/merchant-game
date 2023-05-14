@@ -1,6 +1,7 @@
 from CityUpgradeStrategy import CityUpgradeStrategy
 from market.LocalMarket import LocalMarket
 from market.ResourceName import ResourceName
+from price_modifiers.UtilityDemandPriceModifier import UtilityDemandPriceModifier
 
 
 class City:
@@ -12,12 +13,20 @@ class City:
     # - increases all production
     # - unlocks production of valuable goods
 
+    # This is goiing to be publisher of for example upgrade of city
+    # Observer (local market can )
+
     def __init__(self, name: str, local_market: LocalMarket, upgrade_strategy: CityUpgradeStrategy):
         self.name = name
         self.local_market = local_market
         self.upgrade_strategy = upgrade_strategy
         self.neighbours = {}
         self.prosperity = 100
+
+        # TODO: move to some triggered function when city sets goal to upgrade lvl
+        # TODO: create collection with available modifiers
+        self.local_market.add_price_modifier(UtilityDemandPriceModifier(), ResourceName.Wood)
+        self.local_market.add_price_modifier(UtilityDemandPriceModifier(), ResourceName.Stone)
 
     def add_neighbour(self, city: 'City', distance: int):
         self.neighbours.update(

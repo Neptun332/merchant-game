@@ -1,7 +1,6 @@
 from decimal import Decimal
 
 from EventEngine import EventEngine
-from Factor import Factor
 from GameEngine import GameEngine
 from Map import Map
 from market.GlobalMarket import GlobalMarket
@@ -13,18 +12,22 @@ if __name__ == "__main__":
         ResourceName.Wood: Resource(
             name=ResourceName.Wood,
             units=10,
+            base_price=Decimal(10),
         ),
         ResourceName.Stone: Resource(
             name=ResourceName.Stone,
             units=10,
+            base_price=Decimal(10),
         ),
         ResourceName.Wheat: Resource(
             name=ResourceName.Wheat,
             units=10,
+            base_price=Decimal(10),
         ),
         ResourceName.Gold: Resource(
             name=ResourceName.Gold,
             units=10,
+            base_price=Decimal(1),
         )
 
     }

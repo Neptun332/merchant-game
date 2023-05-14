@@ -2,9 +2,7 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import List
 
-import numpy
-
-from Factor import Factor
+from price_modifiers.IPriceModifier import IPriceModifier
 from market.ResourceName import ResourceName
 
 
@@ -12,8 +10,10 @@ from market.ResourceName import ResourceName
 class Resource:
     name: ResourceName
     units: int
+    base_price: Decimal  # Costs of production and materials
     price_per_unit: Decimal = None
     history_of_price: List = field(default_factory=list)
+    price_modifiers: List = field(default_factory=list)
 
     def add_units(self, units: int):
         self.units += units
@@ -21,11 +21,15 @@ class Resource:
     def remove_units(self, units: int):
         self.units -= units
 
-    def update(self, demand: int, utility: int, demand_change_factor: Factor = Factor(Decimal("1"))) -> Decimal:
-        price_per_unit = self._price_per_unit_based_on_demand(demand, utility) * float(demand_change_factor.value)
-        self.price_per_unit = Decimal(max(0, price_per_unit))
-        self.history_of_price.append(self.price_per_unit)
-        return self.price_per_unit
+    def add_price_modifier(self, price_modifier: IPriceModifier):
+        self.price_modifiers.append(price_modifier)
 
-    def _price_per_unit_based_on_demand(self, demand: int, utility: int, ) -> float:
-        return 1 * numpy.log2(max(0, float(demand - utility) - 100))
+    def remove_price_modifier(self, price_modifier: IPriceModifier):
+        self.price_modifiers.remove(price_modifier)
+
+    def update_price(self):
+        for price_modifier in self.price_modifiers:
+            self.price_per_unit = price_modifier.modify_price(self.base_price)
+            self.history_of_price.append(self.price_per_unit)
+
+
