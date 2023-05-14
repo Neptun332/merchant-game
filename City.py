@@ -25,8 +25,8 @@ class City:
 
         # TODO: move to some triggered function when city sets goal to upgrade lvl
         # TODO: create collection with available modifiers
-        self.local_market.add_price_modifier(UtilityDemandPriceModifier(), ResourceName.Wood)
-        self.local_market.add_price_modifier(UtilityDemandPriceModifier(), ResourceName.Stone)
+        self.local_market.add_utility_demand_modifier(UtilityDemandPriceModifier(), ResourceName.Wood)
+        self.local_market.add_utility_demand_modifier(UtilityDemandPriceModifier(), ResourceName.Stone)
 
     def add_neighbour(self, city: 'City', distance: int):
         self.neighbours.update(
