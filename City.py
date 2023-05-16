@@ -1,4 +1,7 @@
+from typing import Dict
+
 from CityUpgradeStrategy import CityUpgradeStrategy
+from Factor import Factor
 from market.LocalMarket import LocalMarket
 from market.ResourceName import ResourceName
 from price_modifiers.UtilityDemandPriceModifier import UtilityDemandPriceModifier
@@ -16,12 +19,18 @@ class City:
     # This is goiing to be publisher of for example upgrade of city
     # Observer (local market can )
 
-    def __init__(self, name: str, local_market: LocalMarket, upgrade_strategy: CityUpgradeStrategy):
+    def __init__(
+            self,
+            name: str,
+            local_market: LocalMarket,
+            upgrade_strategy: CityUpgradeStrategy,
+            production_boost: Dict[ResourceName, Factor] = {}
+    ):
         self.name = name
         self.local_market = local_market
         self.upgrade_strategy = upgrade_strategy
+        self.production_boost = production_boost
         self.neighbours = {}
-        self.prosperity = 100
 
         # TODO: move to some triggered function when city sets goal to upgrade lvl
         # TODO: create collection with available modifiers
@@ -49,3 +58,6 @@ class City:
         self.local_market.resources_map[ResourceName.Wood].add_units(1)
         self.local_market.resources_map[ResourceName.Stone].add_units(1)
         self.local_market.update(self.upgrade_strategy.get_demand_of_resources())
+
+    def produce_resources(self):
+        production = 

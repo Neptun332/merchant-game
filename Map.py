@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import Set, Dict
 
 from City import City
@@ -24,7 +25,7 @@ class Map:
                 ResourceName.Gold: 100,
             }
         )
-        a = City("A", LocalMarket(resources_map), upgrade_strategy)
+        a = City("A", LocalMarket(resources_map), upgrade_strategy, {ResourceName.Wood: Decimal('1.2')})
         b = City("B", LocalMarket(resources_map), upgrade_strategy)
         c = City("C", LocalMarket(resources_map), upgrade_strategy)
         d = City("D", LocalMarket(resources_map), upgrade_strategy)

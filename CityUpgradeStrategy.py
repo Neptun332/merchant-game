@@ -10,6 +10,11 @@ class CityUpgradeStrategy:
     def __init__(self, resources_needed: Dict[ResourceName, int]):
         self.resources_needed = resources_needed
         self.city_level = 1
+        self.base_prosperity = 100
+        self.prosperity = self._calculate_prosperity()
+
+    def get_prosperity(self) -> int:
+        return self.prosperity
 
     def get_demand_of_resources(self) -> Dict[ResourceName, int]:
         return self.resources_needed
@@ -22,6 +27,7 @@ class CityUpgradeStrategy:
 
     def upgrade(self) -> Dict[ResourceName, int]:
         self.city_level += 1
+        self.prosperity = self._calculate_prosperity()
         resource_cost = self.resources_needed
         self._increase_resource_needed()
         return resource_cost
@@ -32,3 +38,6 @@ class CityUpgradeStrategy:
     def _is_enough_resource(self, resources_map: Dict[ResourceName, Resource], resource_name: ResourceName):
         return resources_map.get(resource_name, 0).units >= self.resources_needed[
             resource_name] * Decimal('1.1')
+
+    def _calculate_prosperity(self):
+        return self.base_prosperity * self.city_level
