@@ -51,11 +51,14 @@ class LocalMarket:
     def show_price_history(self):
         subplot_size = math.ceil(len(self.resources_map.keys()) / 2)
         fig, axes = plt.subplots(nrows=subplot_size, ncols=subplot_size)
+        fig.tight_layout(pad=3)
+        fig.set_size_inches(15, 10)
         for index, (resource_name, resource) in enumerate(self.resources_map.items()):
             data = pd.DataFrame(resource.history_of_price).apply(pd.to_numeric, downcast='float')
 
             subplot_column = index % subplot_size
             subplot_row = int(index / subplot_size)
-            data.plot(title=str(resource_name), subplots=True, ax=axes[subplot_row, subplot_column])
+            data.plot(figsize=(20, 20), title='Resources price', subplots=True, ax=axes[subplot_row, subplot_column])
+            axes[subplot_row, subplot_column].title.set_text(resource_name)
 
         plt.show(block=True)
