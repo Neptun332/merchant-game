@@ -1,4 +1,8 @@
+import math
 from typing import Dict
+
+import matplotlib.pyplot as plt
+import pandas as pd
 
 from market.Resource import Resource
 from market.ResourceName import ResourceName
@@ -43,3 +47,15 @@ class LocalMarket:
         resource = self.resources_map.get(resource_name, None)
         if resource and price_modifier:
             resource.remove_price_modifier(price_modifier)
+
+    def show_price_history(self):
+        subplot_size = math.ceil(len(self.resources_map.keys()) / 2)
+        fig, axes = plt.subplots(nrows=subplot_size, ncols=subplot_size)
+        for index, (resource_name, resource) in enumerate(self.resources_map.items()):
+            data = pd.DataFrame(resource.history_of_price).apply(pd.to_numeric, downcast='float')
+
+            subplot_column = index % subplot_size
+            subplot_row = int(index / subplot_size)
+            data.plot(title=str(resource_name), subplots=True, ax=axes[subplot_row, subplot_column])
+
+        plt.show(block=True)

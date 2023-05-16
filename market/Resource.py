@@ -12,7 +12,7 @@ class Resource:
     units: int
     base_price: Decimal  # Costs of production and materials
     price_per_unit: Decimal = None
-    history_of_price: List = field(default_factory=list)
+    history_of_price: List = field(default_factory=lambda: [0])
     price_modifiers: List = field(default_factory=list)
 
     def add_units(self, units: int):

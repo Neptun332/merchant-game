@@ -48,10 +48,8 @@ class GameEngine:
                 )
             self.tick += 1
 
-        a = list(self.map.cities)[0].local_market.resources_map[ResourceName.Wood].history_of_price
-        data = pd.DataFrame.from_dict(a).apply(pd.to_numeric, downcast='float')
-        data.plot()
-        plt.show()
+        list(self.map.cities)[0].local_market.show_price_history()
+        pass
 
     def _daily_update(self):
         for city in self.map.cities:
