@@ -3,6 +3,7 @@ from typing import Set, Dict
 
 from City import City
 from CityUpgradeStrategy import CityUpgradeStrategy
+from Factor import Factor
 from Kingdom import Kingdom
 from market.GlobalMarket import IGlobalMarket
 from market.LocalMarket import LocalMarket
@@ -22,14 +23,14 @@ class Map:
             {
                 ResourceName.Wood: 100,
                 ResourceName.Stone: 100,
-                ResourceName.Gold: 100,
-            }
+            },
+            Decimal(100)
         )
-        a = City("A", LocalMarket(resources_map), upgrade_strategy, {ResourceName.Wood: Decimal('1.2')})
-        b = City("B", LocalMarket(resources_map), upgrade_strategy)
-        c = City("C", LocalMarket(resources_map), upgrade_strategy)
-        d = City("D", LocalMarket(resources_map), upgrade_strategy)
-        e = City("E", LocalMarket(resources_map), upgrade_strategy)
+        a = City("A", LocalMarket(resources_map, Decimal(100)), upgrade_strategy, {ResourceName.Wood: Factor(Decimal('1.2'))})
+        b = City("B", LocalMarket(resources_map, Decimal(100)), upgrade_strategy)
+        c = City("C", LocalMarket(resources_map, Decimal(100)), upgrade_strategy)
+        d = City("D", LocalMarket(resources_map, Decimal(100)), upgrade_strategy)
+        e = City("E", LocalMarket(resources_map, Decimal(100)), upgrade_strategy)
 
         City.make_them_neighbours(a, b, 10)
         City.make_them_neighbours(a, c, 12)

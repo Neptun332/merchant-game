@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import Dict
 
 from CityUpgradeStrategy import CityUpgradeStrategy
@@ -50,14 +51,23 @@ class City:
         city_b.add_neighbour(city_a, distance)
 
     def update(self):
-        if self.upgrade_strategy.can_upgrade(self.local_market.resources_map):
+        if self.upgrade_strategy.can_upgrade(self.local_market.resources_map, self.local_market.gold):
             resource_needed = self.upgrade_strategy.upgrade()
             self.local_market.remove_resources(resource_needed)
 
-        self.local_market.resources_map[ResourceName.Gold].add_units(1)
-        self.local_market.resources_map[ResourceName.Wood].add_units(1)
-        self.local_market.resources_map[ResourceName.Stone].add_units(1)
+        self.produce_resources()
+
+        # TODO add some production of gold (or not ( ͡° ͜ʖ ͡°))
+        self.local_market.gold += 1
         self.local_market.update(self.upgrade_strategy.get_demand_of_resources())
 
     def produce_resources(self):
-        production = 
+        base_production = self.upgrade_strategy.get_prosperity() / 100
+        for resource_name in self.local_market.resources_map.keys():
+            production = base_production * float(self.production_boost.get(resource_name, Factor(Decimal(1))).value)
+            self.local_market.resources_map[resource_name].add_units(int(production))
+
+
+
+
+

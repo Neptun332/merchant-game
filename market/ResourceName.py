@@ -5,4 +5,3 @@ class ResourceName(Enum):
     Stone = auto()
     Wood = auto()
     Wheat = auto()
-    Gold = auto()

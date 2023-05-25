@@ -1,4 +1,5 @@
 import math
+from decimal import Decimal
 from typing import Dict
 
 import matplotlib.pyplot as plt
@@ -15,8 +16,10 @@ class LocalMarket:
     def __init__(
             self,
             resources_map: Dict[ResourceName, Resource],
+            gold: Decimal,
     ):
         self.resources_map = resources_map
+        self.gold = gold
 
         self.utility_demand_price_modifiers: Dict[ResourceName, IPriceModifier] = {}
         self.default_price_modifier = NoOpPriceModifier()

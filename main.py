@@ -24,11 +24,6 @@ if __name__ == "__main__":
             units=10,
             base_price=Decimal(10),
         ),
-        ResourceName.Gold: Resource(
-            name=ResourceName.Gold,
-            units=10,
-            base_price=Decimal(1),
-        )
 
     }
 
