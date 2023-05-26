@@ -1,3 +1,4 @@
+import copy
 from decimal import Decimal
 from typing import Set, Dict
 
@@ -20,17 +21,62 @@ class Map:
     def _create_hardcoded_kingdoms_with_cities(self, resources_map: Dict[ResourceName, Resource]):
         # TODO add Factory Method or even abstract factory for creating cities
         upgrade_strategy = CityUpgradeStrategy(
-            {
+            resources_needed={
                 ResourceName.Wood: 100,
                 ResourceName.Stone: 100,
             },
-            Decimal(100)
+            gold_needed=Decimal(100)
         )
-        a = City("A", LocalMarket(resources_map, Decimal(100)), upgrade_strategy, {ResourceName.Wood: Factor(Decimal('1.2'))})
-        b = City("B", LocalMarket(resources_map, Decimal(100)), upgrade_strategy)
-        c = City("C", LocalMarket(resources_map, Decimal(100)), upgrade_strategy)
-        d = City("D", LocalMarket(resources_map, Decimal(100)), upgrade_strategy)
-        e = City("E", LocalMarket(resources_map, Decimal(100)), upgrade_strategy)
+        a = City(
+            name="A",
+            local_market=LocalMarket(
+                resources_map=copy.deepcopy(resources_map),
+                gold=Decimal(100)
+            ),
+            upgrade_strategy=copy.deepcopy(upgrade_strategy),
+            produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat, ResourceName.IronOre],
+            production_boost={ResourceName.Wood: Factor(Decimal('1.2'))}
+        )
+        b = City(
+            name="B",
+            local_market=LocalMarket(
+                resources_map=copy.deepcopy(resources_map),
+                gold=Decimal(100)
+            ),
+            upgrade_strategy=copy.deepcopy(upgrade_strategy),
+            produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
+            production_boost={}
+        )
+        c = City(
+            name="C",
+            local_market=LocalMarket(
+                resources_map=copy.deepcopy(resources_map),
+                gold=Decimal(100)
+            ),
+            upgrade_strategy=copy.deepcopy(upgrade_strategy),
+            produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
+            production_boost={}
+        )
+        d = City(
+            name="D",
+            local_market=LocalMarket(
+                resources_map=copy.deepcopy(resources_map),
+                gold=Decimal(100)
+            ),
+            upgrade_strategy=copy.deepcopy(upgrade_strategy),
+            produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
+            production_boost={}
+        )
+        e = City(
+            name="E",
+            local_market=LocalMarket(
+                resources_map=copy.deepcopy(resources_map),
+                gold=Decimal(100)
+            ),
+            upgrade_strategy=copy.deepcopy(upgrade_strategy),
+            produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
+            production_boost={}
+        )
 
         City.make_them_neighbours(a, b, 10)
         City.make_them_neighbours(a, c, 12)

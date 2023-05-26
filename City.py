@@ -1,10 +1,11 @@
 from decimal import Decimal
-from typing import Dict
+from typing import Dict, List
+
+from market.ResourceName import ResourceName
 
 from CityUpgradeStrategy import CityUpgradeStrategy
 from Factor import Factor
 from market.LocalMarket import LocalMarket
-from market.ResourceName import ResourceName
 from price_modifiers.UtilityDemandPriceModifier import UtilityDemandPriceModifier
 
 
@@ -25,11 +26,13 @@ class City:
             name: str,
             local_market: LocalMarket,
             upgrade_strategy: CityUpgradeStrategy,
+            produced_resources: List[ResourceName],
             production_boost: Dict[ResourceName, Factor] = {}
     ):
         self.name = name
         self.local_market = local_market
         self.upgrade_strategy = upgrade_strategy
+        self.produced_resources = produced_resources
         self.production_boost = production_boost
         self.neighbours = {}
 
@@ -66,8 +69,3 @@ class City:
         for resource_name in self.local_market.resources_map.keys():
             production = base_production * float(self.production_boost.get(resource_name, Factor(Decimal(1))).value)
             self.local_market.resources_map[resource_name].add_units(int(production))
-
-
-
-
-
