@@ -11,6 +11,9 @@ class CityUpgradeStrategy:
         self.resources_needed = resources_needed
         self.gold_needed = gold_needed
         self.city_level = 1
+
+        # Prosperity is reflection of economy strength. It should increase consumption of food.
+        # If there is not enough food fo some time, prosperity should drop
         self.base_prosperity = 100
         self.prosperity = self._calculate_prosperity()
 

@@ -1,11 +1,11 @@
 from decimal import Decimal
 from typing import Dict, List
 
-from market.ResourceName import ResourceName
-
 from CityUpgradeStrategy import CityUpgradeStrategy
 from Factor import Factor
+from Workshop import Workshop
 from market.LocalMarket import LocalMarket
+from market.ResourceName import ResourceName
 from price_modifiers.UtilityDemandPriceModifier import UtilityDemandPriceModifier
 
 
@@ -27,17 +27,20 @@ class City:
             local_market: LocalMarket,
             upgrade_strategy: CityUpgradeStrategy,
             produced_resources: List[ResourceName],
-            production_boost: Dict[ResourceName, Factor] = {}
+            production_boost: Dict[ResourceName, Factor],
+            workshops: List[Workshop] = []
     ):
         self.name = name
         self.local_market = local_market
         self.upgrade_strategy = upgrade_strategy
         self.produced_resources = produced_resources
         self.production_boost = production_boost
+        self.workshops = workshops
         self.neighbours = {}
 
         # TODO: move to some triggered function when city sets goal to upgrade lvl
         # TODO: create collection with available modifiers
+        # TODO: planned modifiers: kingdom regulations
         self.local_market.add_utility_demand_modifier(UtilityDemandPriceModifier(), ResourceName.Wood)
         self.local_market.add_utility_demand_modifier(UtilityDemandPriceModifier(), ResourceName.Stone)
 
@@ -58,6 +61,8 @@ class City:
             resource_needed = self.upgrade_strategy.upgrade()
             self.local_market.remove_resources(resource_needed)
 
+
+
         self.produce_resources()
 
         # TODO add some production of gold (or not ( ͡° ͜ʖ ͡°))
@@ -66,6 +71,9 @@ class City:
 
     def produce_resources(self):
         base_production = self.upgrade_strategy.get_prosperity() / 100
-        for resource_name in self.local_market.resources_map.keys():
+        for resource_name in self.produced_resources:
             production = base_production * float(self.production_boost.get(resource_name, Factor(Decimal(1))).value)
             self.local_market.resources_map[resource_name].add_units(int(production))
+
+    def consume_food(self):
+        base_consumption = self.upgrade_strategy.get_prosperity() / 100
