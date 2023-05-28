@@ -32,12 +32,15 @@ class LocalMarket:
 
     def remove_resources(self, resource_units: Dict[ResourceName, int]):
         if not set(resource_units.keys()).issubset(set(self.resources_map)):
-            raise ValueError("Local was requested to remove resource units, but resource does not exist")
+            raise ValueError("Local market was requested to remove resource units, but resource does not exist")
         [resource.remove_units(resource_units.get(resource_name, 0)) for resource_name, resource in
          self.resources_map.items()]
 
-
-    # TODO add method for adding units
+    def add_resources(self, resource_units: Dict[ResourceName, int]):
+        if not set(resource_units.keys()).issubset(set(self.resources_map)):
+            raise ValueError("Local market was requested to add resource units, but resource does not exist")
+        [resource.add_units(resource_units.get(resource_name, 0)) for resource_name, resource in
+         self.resources_map.items()]
 
     def get_resource_units(self, resource_name: ResourceName):
         if resource_name in self.resources_map.keys():
