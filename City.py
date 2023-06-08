@@ -57,7 +57,7 @@ class City:
         city_b.add_neighbour(city_a, distance)
 
     def update(self):
-        if self.upgrade_strategy.can_upgrade(self.local_market.resources_map, self.local_market.gold):
+        if self.upgrade_strategy.can_upgrade(self.local_market.resources_map):
             resource_needed = self.upgrade_strategy.upgrade()
             self.local_market.remove_resources(resource_needed)
 
@@ -66,7 +66,6 @@ class City:
         self.produce_resources()
 
         # TODO add some production of gold (or not ( ͡° ͜ʖ ͡°))
-        self.local_market.gold += 1
         self.local_market.update(self.upgrade_strategy.get_demand_of_resources())
 
     def produce_resources(self):

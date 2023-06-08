@@ -7,9 +7,8 @@ from market.ResourceName import ResourceName
 
 class CityUpgradeStrategy:
 
-    def __init__(self, resources_needed: Dict[ResourceName, int], gold_needed: Decimal):
+    def __init__(self, resources_needed: Dict[ResourceName, int]):
         self.resources_needed = resources_needed
-        self.gold_needed = gold_needed
         self.city_level = 1
 
         # Prosperity is reflection of economy strength. It should increase consumption of food.
@@ -23,8 +22,8 @@ class CityUpgradeStrategy:
     def get_demand_of_resources(self) -> Dict[ResourceName, int]:
         return self.resources_needed
 
-    def can_upgrade(self, resources_map: Dict[ResourceName, Resource], gold: Decimal) -> bool:
-        return self._is_enough_all_resources(resources_map) and self._is_enough_gold(gold)
+    def can_upgrade(self, resources_map: Dict[ResourceName, Resource]) -> bool:
+        return self._is_enough_all_resources(resources_map)
 
     def upgrade(self) -> Dict[ResourceName, int]:
         self.city_level += 1
@@ -35,9 +34,6 @@ class CityUpgradeStrategy:
 
     def _increase_resource_needed(self):
         self.resources_needed = {resource_name: units * 2 for resource_name, units in self.resources_needed.items()}
-
-    def _is_enough_gold(self, gold: Decimal) -> bool:
-        return self.gold_needed * Decimal('1.1') <= gold
 
     def _is_enough_all_resources(self, resources_map: Dict[ResourceName, Resource]) -> bool:
         return all([

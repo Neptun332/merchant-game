@@ -23,15 +23,13 @@ class Map:
         upgrade_strategy = CityUpgradeStrategy(
             resources_needed={
                 ResourceName.Wood: 100,
-                ResourceName.Stone: 100,
+                ResourceName.Stone: 100
             },
-            gold_needed=Decimal(100)
         )
         a = City(
             name="A",
             local_market=LocalMarket(
                 resources_map=copy.deepcopy(resources_map),
-                gold=Decimal(100)
             ),
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat, ResourceName.IronOre],
@@ -41,7 +39,6 @@ class Map:
             name="B",
             local_market=LocalMarket(
                 resources_map=copy.deepcopy(resources_map),
-                gold=Decimal(100)
             ),
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
@@ -51,7 +48,6 @@ class Map:
             name="C",
             local_market=LocalMarket(
                 resources_map=copy.deepcopy(resources_map),
-                gold=Decimal(100)
             ),
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
@@ -61,7 +57,6 @@ class Map:
             name="D",
             local_market=LocalMarket(
                 resources_map=copy.deepcopy(resources_map),
-                gold=Decimal(100)
             ),
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
@@ -71,7 +66,6 @@ class Map:
             name="E",
             local_market=LocalMarket(
                 resources_map=copy.deepcopy(resources_map),
-                gold=Decimal(100)
             ),
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],

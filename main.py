@@ -24,8 +24,13 @@ if __name__ == "__main__":
             units=10,
             base_price=Decimal(10),
         ),
-
     }
+    resource_gold = Resource(
+        name=ResourceName.Gold,
+        units=sum([resource.get_gold_equivalent() for resource in resources_map.values()]),
+        base_price=Decimal(1),
+    )
+    resources_map[ResourceName.Gold] = resource_gold
 
     game_engine = GameEngine(
         map=Map(GlobalMarket(), resources_map),

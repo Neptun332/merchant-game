@@ -16,10 +16,8 @@ class LocalMarket:
     def __init__(
             self,
             resources_map: Dict[ResourceName, Resource],
-            gold: Decimal,
     ):
         self.resources_map = resources_map
-        self.gold = gold
 
         self.utility_demand_price_modifiers: Dict[ResourceName, IPriceModifier] = {}
         self.default_price_modifier = NoOpPriceModifier()
@@ -73,3 +71,4 @@ class LocalMarket:
             axes[subplot_row, subplot_column].title.set_text(resource_name)
 
         plt.show(block=True)
+
