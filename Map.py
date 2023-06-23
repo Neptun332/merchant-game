@@ -99,5 +99,10 @@ class Map:
             e
         }
 
-    def get_cities(self) -> Set[City]:
-        return self.cities
+        [self._global_market.set_local_market(city.local_market) for city in self.cities]
+        a = self._global_market.get_all_gold()
+        pass
+
+
+def get_cities(self) -> Set[City]:
+    return self.cities

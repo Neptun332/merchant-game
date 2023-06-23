@@ -24,6 +24,11 @@ if __name__ == "__main__":
             units=10,
             base_price=Decimal(10),
         ),
+        ResourceName.IronOre: Resource(
+            name=ResourceName.IronOre,
+            units=0,
+            base_price=Decimal(10),
+        ),
     }
     resource_gold = Resource(
         name=ResourceName.Gold,

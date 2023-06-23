@@ -1,10 +1,13 @@
 from abc import ABC, abstractmethod
 from decimal import Decimal
 
+from market.ResourceName import ResourceName
+
 
 class IPriceModifier(ABC):
 
-    def update(self, demand: int, utility: int):
+    @abstractmethod
+    def update(self, context: 'LocalMarket', resource_name: ResourceName):
         ...
 
     @abstractmethod

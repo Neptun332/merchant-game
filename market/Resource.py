@@ -12,8 +12,12 @@ class Resource:
     units: int
     base_price: Decimal  # Costs of production and materials
     price_per_unit: Decimal = None
-    history_of_price: List = field(default_factory=lambda: [0])
+    history_of_price: List = field(default_factory=lambda: [])
     price_modifiers: List = field(default_factory=list)
+
+    def __post_init__(self):
+        self.price_per_unit = self.base_price
+        self.history_of_price = [self.price_per_unit]
 
     def add_units(self, units: int):
         self.units += units
@@ -36,9 +40,12 @@ class Resource:
         #  5g = (15g * 0.66) / 2
         #  5g = (15g * 0.33) / 1
         #  deflation happens, so production of gold is required
+        price = self.base_price
         for price_modifier in self.price_modifiers:
-            self.price_per_unit = price_modifier.modify_price(self.base_price)
-            self.history_of_price.append(self.price_per_unit)
+            price = price_modifier.modify_price(price)
+        self.price_per_unit = price
+        self.history_of_price.append(self.price_per_unit)
 
     def get_gold_equivalent(self) -> int:
         return round(self.base_price * self.units)
+

@@ -1,5 +1,4 @@
 import math
-from decimal import Decimal
 from typing import Dict
 
 import matplotlib.pyplot as plt
@@ -21,11 +20,13 @@ class LocalMarket:
 
         self.utility_demand_price_modifiers: Dict[ResourceName, IPriceModifier] = {}
         self.default_price_modifier = NoOpPriceModifier()
+        self.demand_per_resource = {}
 
     def update(self, demand: Dict[ResourceName, int]):
+        self.demand_per_resource = demand
         for resource_name, resource in self.resources_map.items():
             price_modifier = self.utility_demand_price_modifiers.get(resource_name, self.default_price_modifier)
-            price_modifier.update(demand.get(resource_name, 0), self.get_resource_units(resource_name))
+            price_modifier.update(self, resource_name)
             resource.update_price()
 
     def remove_resources(self, resource_units: Dict[ResourceName, int]):

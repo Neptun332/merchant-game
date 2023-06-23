@@ -1,29 +1,27 @@
-from abc import ABC
-from typing import List
+from abc import ABC, abstractmethod
 
-from City import City
-from Factor import Factor
+from market.LocalMarket import LocalMarket
+from market.ResourceName import ResourceName
 
 
 class IGlobalMarket(ABC):
-    pass
+
+    @abstractmethod
+    def set_local_market(self, local_market: LocalMarket):
+        ...
+
+    @abstractmethod
+    def get_all_gold(self) -> int:
+        ...
 
 
 class GlobalMarket(IGlobalMarket):
 
     def __init__(self):
-        self.cities = []
-        self.last_sum_of_gold = self.get_sum_of_gold_in_every_city(self.cities)
+        self.local_markets = {}
 
-    def set_cities(self, cities: List[City]):
-        self.cities = cities
+    def set_local_market(self, local_market: LocalMarket):
+        self.local_markets[id(local_market)] = local_market
 
-    def get_sum_of_gold_in_every_city(self, cities: List[City]):
-        return sum([city.resources.gold for city in cities])
-
-    def update(self):
-        inflation = self.calculate_inflation()
-
-    def calculate_inflation(self) -> Factor:
-        sum_of_gold = self.get_sum_of_gold_in_every_city(self.cities)
-        return Factor(1 - (sum_of_gold / self.last_sum_of_gold))
+    def get_all_gold(self):
+        return sum([local_market.resources_map[ResourceName.Gold].units for local_market in self.local_markets.values()])
