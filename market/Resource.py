@@ -40,6 +40,8 @@ class Resource:
         #  5g = (15g * 0.66) / 2
         #  5g = (15g * 0.33) / 1
         #  deflation happens, so production of gold is required
+
+
         price = self.base_price
         for price_modifier in self.price_modifiers:
             price = price_modifier.modify_price(price)

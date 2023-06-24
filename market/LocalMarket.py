@@ -1,4 +1,5 @@
 import math
+from decimal import Decimal
 from typing import Dict
 
 import matplotlib.pyplot as plt
@@ -73,3 +74,7 @@ class LocalMarket:
 
         plt.show(block=True)
 
+    def set_resource_base_price(self, base_price: Decimal, resource_name: ResourceName):
+        resource = self.resources_map.get(resource_name)
+        if resource: #TODO update python to use walrus
+            resource.base_price = base_price
