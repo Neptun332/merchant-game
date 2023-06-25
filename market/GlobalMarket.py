@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import Dict
 from decimal import Decimal
+from typing import Dict
 
 from Factor import Factor
 from market.LocalMarket import LocalMarket
@@ -36,6 +36,7 @@ class GlobalMarket(IGlobalMarket):
 
     def set_local_markets(self, local_markets: Dict[int, LocalMarket]):
         self.local_markets = local_markets
+        self.update()
 
     def update(self):
         all_gold = self.get_resource_unit_count(ResourceName.Gold)

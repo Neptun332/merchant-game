@@ -12,24 +12,24 @@ if __name__ == "__main__":
     resources_map = {
         ResourceName.Wood: Resource(
             name=ResourceName.Wood,
-            units=10,
+            units=100,
         ),
         ResourceName.Stone: Resource(
             name=ResourceName.Stone,
-            units=10,
+            units=100,
         ),
         ResourceName.Wheat: Resource(
             name=ResourceName.Wheat,
-            units=10,
+            units=100,
         ),
         ResourceName.IronOre: Resource(
             name=ResourceName.IronOre,
-            units=0,
+            units=10,
         ),
     }
     resource_gold = Resource(
         name=ResourceName.Gold,
-        units=300,
+        units=3000,
         base_price=Decimal(1),
     )
     resources_map[ResourceName.Gold] = resource_gold
