@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import List
 
+from Factor import Factor
 from market.ResourceName import ResourceName
 from price_modifiers.IPriceModifier import IPriceModifier
 
@@ -10,7 +11,7 @@ from price_modifiers.IPriceModifier import IPriceModifier
 class Resource:
     name: ResourceName
     units: int
-    base_price: Decimal  # Costs of production and materials
+    base_price: Decimal = None
     price_per_unit: Decimal = None
     history_of_price: List = field(default_factory=lambda: [])
     price_modifiers: List = field(default_factory=list)
@@ -41,7 +42,6 @@ class Resource:
         #  5g = (15g * 0.33) / 1
         #  deflation happens, so production of gold is required
 
-
         price = self.base_price
         for price_modifier in self.price_modifiers:
             price = price_modifier.modify_price(price)
@@ -50,4 +50,3 @@ class Resource:
 
     def get_gold_equivalent(self) -> int:
         return round(self.base_price * self.units)
-

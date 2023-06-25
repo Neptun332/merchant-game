@@ -4,6 +4,7 @@ from typing import Dict, List
 from CityUpgradeStrategy import CityUpgradeStrategy
 from Factor import Factor
 from Workshop import Workshop
+from market.GlobalMarket import IGlobalMarket
 from market.LocalMarket import LocalMarket
 from market.ResourceName import ResourceName
 from price_modifiers.UtilityDemandPriceModifier import UtilityDemandPriceModifier
@@ -25,6 +26,7 @@ class City:
             self,
             name: str,
             local_market: LocalMarket,
+            global_market: IGlobalMarket,
             upgrade_strategy: CityUpgradeStrategy,
             produced_resources: List[ResourceName],
             production_boost: Dict[ResourceName, Factor],
@@ -32,6 +34,7 @@ class City:
     ):
         self.name = name
         self.local_market = local_market
+        self.global_market = global_market
         self.upgrade_strategy = upgrade_strategy
         self.produced_resources = produced_resources
         self.production_boost = production_boost
@@ -61,11 +64,8 @@ class City:
             resource_needed = self.upgrade_strategy.upgrade()
             self.local_market.remove_resources(resource_needed)
 
-
-
         self.produce_resources()
-
-        # TODO add some production of gold (or not ( ͡° ͜ʖ ͡°))
+        self.global_market.update()
         self.local_market.update(self.upgrade_strategy.get_demand_of_resources())
 
     def produce_resources(self):

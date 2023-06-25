@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 from EventEngine import EventEngine
+from Factor import Factor
 from GameEngine import GameEngine
 from Map import Map
 from market.GlobalMarket import GlobalMarket
@@ -12,33 +13,40 @@ if __name__ == "__main__":
         ResourceName.Wood: Resource(
             name=ResourceName.Wood,
             units=10,
-            base_price=Decimal(10),
         ),
         ResourceName.Stone: Resource(
             name=ResourceName.Stone,
             units=10,
-            base_price=Decimal(10),
         ),
         ResourceName.Wheat: Resource(
             name=ResourceName.Wheat,
             units=10,
-            base_price=Decimal(10),
         ),
         ResourceName.IronOre: Resource(
             name=ResourceName.IronOre,
             units=0,
-            base_price=Decimal(10),
         ),
     }
     resource_gold = Resource(
         name=ResourceName.Gold,
-        units=sum([resource.get_gold_equivalent() for resource in resources_map.values()]),
+        units=300,
         base_price=Decimal(1),
     )
     resources_map[ResourceName.Gold] = resource_gold
 
     game_engine = GameEngine(
-        map=Map(GlobalMarket(), resources_map),
+        map=Map(GlobalMarket(
+            unit_price_factor_per_resource={
+                ResourceName.Wood: Factor(Decimal(.25)),
+                ResourceName.Stone: Factor(Decimal(.25)),
+                ResourceName.Wheat: Factor(Decimal(.25)),
+                ResourceName.IronOre: Factor(Decimal(.25)),
+                ResourceName.GoldOre: Factor(Decimal(0)),
+                ResourceName.CopperOre: Factor(Decimal(0)),
+                ResourceName.Silk: Factor(Decimal(0)),
+                ResourceName.Fish: Factor(Decimal(0)),
+            }
+        ), resources_map),
         event_engine=EventEngine(),
         tick_rate=None,
         ticks_to_next_month=30

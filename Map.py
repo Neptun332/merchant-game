@@ -31,6 +31,7 @@ class Map:
             local_market=LocalMarket(
                 resources_map=copy.deepcopy(resources_map),
             ),
+            global_market=self._global_market,
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat, ResourceName.IronOre],
             production_boost={ResourceName.Wood: Factor(Decimal('1.2'))}
@@ -40,6 +41,7 @@ class Map:
             local_market=LocalMarket(
                 resources_map=copy.deepcopy(resources_map),
             ),
+            global_market=self._global_market,
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
             production_boost={}
@@ -49,6 +51,7 @@ class Map:
             local_market=LocalMarket(
                 resources_map=copy.deepcopy(resources_map),
             ),
+            global_market=self._global_market,
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
             production_boost={}
@@ -58,6 +61,7 @@ class Map:
             local_market=LocalMarket(
                 resources_map=copy.deepcopy(resources_map),
             ),
+            global_market=self._global_market,
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
             production_boost={}
@@ -67,6 +71,7 @@ class Map:
             local_market=LocalMarket(
                 resources_map=copy.deepcopy(resources_map),
             ),
+            global_market=self._global_market,
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
             production_boost={}
@@ -99,8 +104,12 @@ class Map:
             e
         }
 
-        [self._global_market.set_local_market(city.local_market) for city in self.cities]
-
+        self._global_market.set_local_markets(
+            local_markets={
+                id(city.local_market): city.local_market
+                for city in self.cities
+            }
+        )
 
     def get_cities(self) -> Set[City]:
         return self.cities

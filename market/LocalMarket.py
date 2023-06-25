@@ -76,5 +76,5 @@ class LocalMarket:
 
     def set_resource_base_price(self, base_price: Decimal, resource_name: ResourceName):
         resource = self.resources_map.get(resource_name)
-        if resource: #TODO update python to use walrus
+        if resource:  # TODO update python to use walrus
             resource.base_price = base_price
