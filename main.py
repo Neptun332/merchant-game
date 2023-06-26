@@ -22,10 +22,27 @@ if __name__ == "__main__":
             name=ResourceName.Wheat,
             units=100,
         ),
+        ResourceName.GoldOre: Resource(
+            name=ResourceName.GoldOre,
+            units=0,
+        ),
         ResourceName.IronOre: Resource(
             name=ResourceName.IronOre,
             units=10,
         ),
+        ResourceName.CopperOre: Resource(
+            name=ResourceName.CopperOre,
+            units=0,
+        ),
+        ResourceName.Silk: Resource(
+            name=ResourceName.Silk,
+            units=0,
+        ),
+        ResourceName.Fish: Resource(
+            name=ResourceName.Fish,
+            units=0,
+        ),
+
     }
     resource_gold = Resource(
         name=ResourceName.Gold,
@@ -37,14 +54,14 @@ if __name__ == "__main__":
     game_engine = GameEngine(
         map=Map(GlobalMarket(
             unit_price_factor_per_resource={
-                ResourceName.Wood: Factor(Decimal(.25)),
-                ResourceName.Stone: Factor(Decimal(.25)),
-                ResourceName.Wheat: Factor(Decimal(.25)),
-                ResourceName.IronOre: Factor(Decimal(.25)),
-                ResourceName.GoldOre: Factor(Decimal(0)),
-                ResourceName.CopperOre: Factor(Decimal(0)),
-                ResourceName.Silk: Factor(Decimal(0)),
-                ResourceName.Fish: Factor(Decimal(0)),
+                ResourceName.Wood: Factor(Decimal(.111)),
+                ResourceName.Stone: Factor(Decimal(.111)),
+                ResourceName.Wheat: Factor(Decimal(.111)),
+                ResourceName.IronOre: Factor(Decimal(.111)),
+                ResourceName.GoldOre: Factor(Decimal(.111)),
+                ResourceName.CopperOre: Factor(Decimal(.111)),
+                ResourceName.Silk: Factor(Decimal(.111)),
+                ResourceName.Fish: Factor(Decimal(.111)),
             }
         ), resources_map),
         event_engine=EventEngine(),

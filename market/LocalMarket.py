@@ -31,16 +31,12 @@ class LocalMarket:
             resource.update_price()
 
     def remove_resources(self, resource_units: Dict[ResourceName, int]):
-        if not set(resource_units.keys()).issubset(set(self.resources_map)):
-            raise ValueError("Local market was requested to remove resource units, but resource does not exist")
-        [resource.remove_units(resource_units.get(resource_name, 0)) for resource_name, resource in
-         self.resources_map.items()]
+        [self.resources_map[resource_name].remove_units(units) for resource_name, units in
+         resource_units.items()]
 
     def add_resources(self, resource_units: Dict[ResourceName, int]):
-        if not set(resource_units.keys()).issubset(set(self.resources_map)):
-            raise ValueError("Local market was requested to add resource units, but resource does not exist")
-        [resource.add_units(resource_units.get(resource_name, 0)) for resource_name, resource in
-         self.resources_map.items()]
+        [self.resources_map[resource_name].add_units(units) for resource_name, units in
+         resource_units.items()]
 
     def get_resource_units(self, resource_name: ResourceName):
         if resource_name in self.resources_map.keys():
@@ -60,7 +56,7 @@ class LocalMarket:
             resource.remove_price_modifier(price_modifier)
 
     def show_price_history(self):
-        subplot_size = math.ceil(len(self.resources_map.keys()) / 2)
+        subplot_size = math.ceil(math.sqrt(len(self.resources_map.keys())))
         fig, axes = plt.subplots(nrows=subplot_size, ncols=subplot_size)
         fig.tight_layout(pad=3)
         fig.set_size_inches(15, 10)

@@ -11,6 +11,7 @@ from price_modifiers.UtilityDemandPriceModifier import UtilityDemandPriceModifie
 
 
 class City:
+    FOOD_RESOURCES = [ResourceName.Wheat, ResourceName.Fish]
 
     # Cities will have production of resources and small production of gold.
     # As the sink of to handle inflation they will be able to spend that on
@@ -65,6 +66,7 @@ class City:
             self.local_market.remove_resources(resource_needed)
 
         self.produce_resources()
+        self.consume_resources()
         self.global_market.update()
         self.local_market.update(self.upgrade_strategy.get_demand_of_resources())
 
@@ -74,5 +76,18 @@ class City:
             production = base_production * float(self.production_boost.get(resource_name, Factor(Decimal(1))).value)
             self.local_market.resources_map[resource_name].add_units(int(production))
 
+    def consume_resources(self):
+        self.consume_food()
+
     def consume_food(self):
         base_consumption = self.upgrade_strategy.get_prosperity() / 100
+        food_resources_units = {
+            resource_name: self.local_market.get_resource_units(resource_name)
+            for resource_name in self.FOOD_RESOURCES
+        }
+        all_food_units = sum(food_resources_units.values())
+        food_to_be_consumed = {
+            resource_name: round(base_consumption * (food_resources_units[resource_name] / all_food_units))
+            for resource_name in self.FOOD_RESOURCES
+        }
+        self.local_market.remove_resources(food_to_be_consumed)
