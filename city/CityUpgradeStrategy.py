@@ -32,6 +32,9 @@ class CityUpgradeStrategy:
         self._increase_resource_needed()
         return resource_cost
 
+    def get_city_level(self) -> int:
+        return self.city_level
+
     def _increase_resource_needed(self):
         self.resources_needed = {resource_name: units * 2 for resource_name, units in self.resources_needed.items()}
 

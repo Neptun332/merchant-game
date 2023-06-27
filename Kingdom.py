@@ -1,6 +1,6 @@
 from typing import Set
 
-from City import City
+from city.City import City
 
 
 class Kingdom:

@@ -2,7 +2,7 @@ import random
 
 from loguru import logger
 
-from City import City
+from city.City import City
 from Event import Event, EventStateEnum
 from Probability import Probability
 from config.TreasureEventConfig import TreasureEventConfig

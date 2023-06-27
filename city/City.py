@@ -1,27 +1,23 @@
 from decimal import Decimal
 from typing import Dict, List
 
-from CityUpgradeStrategy import CityUpgradeStrategy
 from Factor import Factor
-from Workshop import Workshop
+from city.CityUpgradeStrategy import CityUpgradeStrategy
 from market.GlobalMarket import IGlobalMarket
 from market.LocalMarket import LocalMarket
 from market.ResourceName import ResourceName
 from price_modifiers.UtilityDemandPriceModifier import UtilityDemandPriceModifier
+from workshop.Workshop import Workshop
 
 
 class City:
     FOOD_RESOURCES = [ResourceName.Wheat, ResourceName.Fish]
 
     # Cities will have production of resources and small production of gold.
-    # As the sink of to handle inflation they will be able to spend that on
     # increase of prosperity - strength of economy
     # prosperity:
     # - increases all production
     # - unlocks production of valuable goods
-
-    # This is goiing to be publisher of for example upgrade of city
-    # Observer (local market can )
 
     def __init__(
             self,
@@ -63,6 +59,7 @@ class City:
     def update(self):
         if self.upgrade_strategy.can_upgrade(self.local_market.resources_map):
             resource_needed = self.upgrade_strategy.upgrade()
+            [workshop.upgrade(self.upgrade_strategy.get_city_level()) for workshop in self.workshops]
             self.local_market.remove_resources(resource_needed)
 
         self.produce_resources()
@@ -71,10 +68,12 @@ class City:
         self.local_market.update(self.upgrade_strategy.get_demand_of_resources())
 
     def produce_resources(self):
-        base_production = self.upgrade_strategy.get_prosperity() / 100
-        for resource_name in self.produced_resources:
-            production = base_production * float(self.production_boost.get(resource_name, Factor(Decimal(1))).value)
-            self.local_market.resources_map[resource_name].add_units(int(production))
+        for workshop in self.workshops:
+            if workshop.can_produce(self.local_market.resources_map):
+                production_boost = self.production_boost.get(workshop.get_produced_resource_name(), Factor(Decimal(1)))
+                consumed_resources, produced_resources = workshop.produce(production_boost)
+                self.local_market.remove_resources(resource_units=consumed_resources)
+                self.local_market.add_resources(resource_units=produced_resources)
 
     def consume_resources(self):
         self.consume_food()

@@ -2,7 +2,7 @@ import random
 from decimal import Decimal
 from typing import List
 
-from City import City
+from city.City import City
 from TreasureEvent import TreasureEvent, Probability, TreasureEventConfig
 
 

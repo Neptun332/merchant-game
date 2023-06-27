@@ -2,14 +2,15 @@ import copy
 from decimal import Decimal
 from typing import Set, Dict
 
-from City import City
-from CityUpgradeStrategy import CityUpgradeStrategy
 from Factor import Factor
 from Kingdom import Kingdom
+from city.City import City
+from city.CityUpgradeStrategy import CityUpgradeStrategy
 from market.GlobalMarket import IGlobalMarket
 from market.LocalMarket import LocalMarket
 from market.Resource import Resource
 from market.ResourceName import ResourceName
+from workshop.NotConsumingWorkshop import NotConsumingWorkshop
 
 
 class Map:
@@ -26,6 +27,25 @@ class Map:
                 ResourceName.Stone: 100
             },
         )
+        basic_workshops = [
+            NotConsumingWorkshop(
+                resource_name_produced=ResourceName.Wood,
+                resource_units_produced=1,
+                city_level=upgrade_strategy.get_city_level(),
+            ),
+            NotConsumingWorkshop(
+                resource_name_produced=ResourceName.Stone,
+                resource_units_produced=1,
+                city_level=upgrade_strategy.get_city_level(),
+            ),
+            NotConsumingWorkshop(
+                resource_name_produced=ResourceName.Wheat,
+                resource_units_produced=1,
+                city_level=upgrade_strategy.get_city_level(),
+            ),
+
+        ]
+
         a = City(
             name="A",
             local_market=LocalMarket(
@@ -34,7 +54,8 @@ class Map:
             global_market=self._global_market,
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat, ResourceName.IronOre],
-            production_boost={ResourceName.Wood: Factor(Decimal('1.2'))}
+            production_boost={ResourceName.Wood: Factor(Decimal('1.2'))},
+            workshops=basic_workshops
         )
         b = City(
             name="B",
@@ -44,7 +65,9 @@ class Map:
             global_market=self._global_market,
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
-            production_boost={}
+            production_boost={},
+            workshops=basic_workshops
+
         )
         c = City(
             name="C",
@@ -54,7 +77,8 @@ class Map:
             global_market=self._global_market,
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
-            production_boost={}
+            production_boost={},
+            workshops=basic_workshops
         )
         d = City(
             name="D",
@@ -64,7 +88,8 @@ class Map:
             global_market=self._global_market,
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
-            production_boost={}
+            production_boost={},
+            workshops=basic_workshops
         )
         e = City(
             name="E",
@@ -74,7 +99,8 @@ class Map:
             global_market=self._global_market,
             upgrade_strategy=copy.deepcopy(upgrade_strategy),
             produced_resources=[ResourceName.Wood, ResourceName.Stone, ResourceName.Wheat],
-            production_boost={}
+            production_boost={},
+            workshops=basic_workshops
         )
 
         City.make_them_neighbours(a, b, 10)
