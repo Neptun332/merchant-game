@@ -25,16 +25,16 @@ class Workshop(IWorkshop, ABC):
             resource_units_produced: int,
             resource_name_consumed: Optional[ResourceName],  # Basic resources like wood stone does not consume anything
             resource_units_consumed: Optional[int],
-            city_level: int
+            level: int
     ):
         self.resource_name_consumed = resource_name_consumed
         self.resource_units_consumed = resource_units_consumed
         self.resource_name_produced = resource_name_produced
         self.resource_units_produced = resource_units_produced
-        self.city_level = city_level
+        self.level = level
 
-    def upgrade(self, city_level: int):
-        self.city_level = city_level
+    def upgrade(self):
+        self.level += 1
 
     def get_produced_resource_name(self) -> ResourceName:
         return self.resource_name_produced

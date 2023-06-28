@@ -63,7 +63,7 @@ if __name__ == "__main__":
                 ResourceName.Silk: Factor(Decimal(.111)),
                 ResourceName.Fish: Factor(Decimal(.111)),
             }
-        ), resources_map),
+        )),
         event_engine=EventEngine(),
         tick_rate=None,
         ticks_to_next_month=30

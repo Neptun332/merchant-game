@@ -25,7 +25,6 @@ class City:
             local_market: LocalMarket,
             global_market: IGlobalMarket,
             upgrade_strategy: CityUpgradeStrategy,
-            produced_resources: List[ResourceName],
             production_boost: Dict[ResourceName, Factor],
             workshops: List[Workshop] = []
     ):
@@ -33,7 +32,6 @@ class City:
         self.local_market = local_market
         self.global_market = global_market
         self.upgrade_strategy = upgrade_strategy
-        self.produced_resources = produced_resources
         self.production_boost = production_boost
         self.workshops = workshops
         self.neighbours = {}
@@ -59,7 +57,7 @@ class City:
     def update(self):
         if self.upgrade_strategy.can_upgrade(self.local_market.resources_map):
             resource_needed = self.upgrade_strategy.upgrade()
-            [workshop.upgrade(self.upgrade_strategy.get_city_level()) for workshop in self.workshops]
+            [workshop.upgrade() for workshop in self.workshops]
             self.local_market.remove_resources(resource_needed)
 
         self.produce_resources()
@@ -90,3 +88,6 @@ class City:
             for resource_name in self.FOOD_RESOURCES
         }
         self.local_market.remove_resources(food_to_be_consumed)
+
+    def show_price_history(self):
+        self.local_market.show_price_history(self.name)

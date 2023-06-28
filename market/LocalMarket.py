@@ -55,7 +55,7 @@ class LocalMarket:
         if resource and price_modifier:
             resource.remove_price_modifier(price_modifier)
 
-    def show_price_history(self):
+    def show_price_history(self, city_name: str):
         subplot_size = math.ceil(math.sqrt(len(self.resources_map.keys())))
         fig, axes = plt.subplots(nrows=subplot_size, ncols=subplot_size)
         fig.tight_layout(pad=3)
@@ -65,10 +65,10 @@ class LocalMarket:
 
             subplot_column = index % subplot_size
             subplot_row = int(index / subplot_size)
-            data.plot(figsize=(20, 20), title='Resources price', subplots=True, ax=axes[subplot_row, subplot_column])
+            data.plot(figsize=(20, 20), title=f'Resources price, city_name={city_name}', subplots=True, ax=axes[subplot_row, subplot_column])
             axes[subplot_row, subplot_column].title.set_text(resource_name)
 
-        plt.show(block=True)
+        plt.show(block=False)
 
     def set_resource_base_price(self, base_price: Decimal, resource_name: ResourceName):
         if resource := self.resources_map.get(resource_name):

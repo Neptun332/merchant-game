@@ -1,14 +1,11 @@
 import time
 
-import pandas as pd
 from loguru import logger
+from matplotlib import pyplot as plt
 
 from EventEngine import EventEngine
 from Map import Map
 from TreasureEvent import TreasureEventConfig
-from market.ResourceName import ResourceName
-import matplotlib.pyplot as plt
-
 
 
 class GameEngine:
@@ -48,8 +45,9 @@ class GameEngine:
                 )
             self.tick += 1
 
-        list(self.map.cities)[0].local_market.show_price_history()
-        pass
+        [city.show_price_history() for city in list(self.map.cities)]
+        
+        plt.show(block=True)
 
     def _daily_update(self):
         for city in self.map.cities:

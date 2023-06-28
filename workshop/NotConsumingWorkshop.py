@@ -12,14 +12,14 @@ class NotConsumingWorkshop(Workshop):
             self,
             resource_name_produced: ResourceName,
             resource_units_produced: int,
-            city_level: int
+            level: int
     ):
         super().__init__(
             resource_name_produced=resource_name_produced,
             resource_units_produced=resource_units_produced,
             resource_name_consumed=None,
             resource_units_consumed=None,
-            city_level=city_level)
+            level=level)
 
     def can_produce(self, resources_map: Dict[ResourceName, Resource]) -> bool:
         return True
@@ -27,5 +27,5 @@ class NotConsumingWorkshop(Workshop):
     def produce(self, production_boost: Factor) -> Tuple[Dict[ResourceName, int], Dict[ResourceName, int]]:
         return {}, {
             self.resource_name_produced:
-                int(self.resource_units_produced * self.city_level * production_boost.value)
+                int(self.resource_units_produced * self.level * production_boost.value)
         }
