@@ -6,6 +6,7 @@ from matplotlib import pyplot as plt
 from EventEngine import EventEngine
 from Map import Map
 from TreasureEvent import TreasureEventConfig
+from market.GlobalMarket import IGlobalMarket
 
 
 class GameEngine:
@@ -15,6 +16,7 @@ class GameEngine:
             map: Map,
             event_engine: EventEngine,
             ticks_to_next_month: int,
+            global_market: IGlobalMarket,
             tick_rate: float = None,
     ):
         self.tick_rate = tick_rate
@@ -26,6 +28,7 @@ class GameEngine:
             TreasureEventConfig((200, 300))
         )
         self.tick = 1
+        self.global_market = global_market
 
     def run(self):
         logger.info("Started GameEngine")
@@ -46,7 +49,7 @@ class GameEngine:
             self.tick += 1
 
         [city.show_price_history() for city in list(self.map.cities)]
-        self.map._global_market.show_resource_units_count()
+        self.global_market.show_resource_units_count()
         plt.show(block=True)
 
     def _daily_update(self):

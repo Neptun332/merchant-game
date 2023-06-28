@@ -26,6 +26,10 @@ class IGlobalMarket(ABC):
     def update(self):
         ...
 
+    @abstractmethod
+    def show_resource_units_count(self):
+        ...
+
 
 class GlobalMarket(IGlobalMarket):
 
@@ -72,7 +76,8 @@ class GlobalMarket(IGlobalMarket):
 
             subplot_column = index % subplot_size
             subplot_row = int(index / subplot_size)
-            data.plot(figsize=(20, 20), title=f'All resource units in whole market', subplots=True, ax=axes[subplot_row, subplot_column])
+            data.plot(figsize=(20, 20), title=f'All resource units in whole market', subplots=True,
+                      ax=axes[subplot_row, subplot_column])
             axes[subplot_row, subplot_column].title.set_text(resource_name)
 
         plt.show(block=False)
