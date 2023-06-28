@@ -46,7 +46,7 @@ class GameEngine:
             self.tick += 1
 
         [city.show_price_history() for city in list(self.map.cities)]
-        
+        self.map._global_market.show_resource_units_count()
         plt.show(block=True)
 
     def _daily_update(self):
