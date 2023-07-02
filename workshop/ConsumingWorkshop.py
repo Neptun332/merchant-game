@@ -1,7 +1,7 @@
 from typing import Tuple, Dict, List
 
 from Factor import Factor
-from city.City import City
+from city.ICity import ICity
 from market.Resource import Resource
 from market.ResourceName import ResourceName
 from market.Unit import Unit
@@ -16,7 +16,7 @@ class ConsumingWorkshop(Workshop):
     def produce(
             self,
             production_boost: Factor,
-            producer_city: City,
+            producer_city: ICity,
             current_tick: int
     ) -> Tuple[Dict[ResourceName, int], Dict[ResourceName, List[Unit]]]:
         return {self.resource_name_consumed: self.resource_units_consumed * self.level}, \

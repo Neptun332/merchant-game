@@ -5,6 +5,7 @@ from typing import Dict, List
 import matplotlib.pyplot as plt
 import pandas as pd
 
+from city.ICity import ICity
 from market.Resource import Resource
 from market.ResourceName import ResourceName
 from market.Unit import Unit
@@ -77,5 +78,5 @@ class LocalMarket:
         if resource := self.resources_map.get(resource_name):
             resource.base_price = base_price
 
-    def set_produced_by_on_resource_units(self, produced_by: 'City'):
+    def set_produced_by_on_resource_units(self, produced_by: ICity):
         [[unit.set_produced_by(produced_by) for unit in resource.units] for _, resource in self.resources_map.items()]
