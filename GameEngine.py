@@ -54,7 +54,7 @@ class GameEngine:
 
     def _daily_update(self):
         for city in self.map.cities:
-            city.update()
+            city.update(self.tick)
         # self.event_engine.attempt_triggering_events()
 
     def _monthly_update(self):

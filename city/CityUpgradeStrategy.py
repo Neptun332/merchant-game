@@ -45,7 +45,7 @@ class CityUpgradeStrategy:
         ])
 
     def _is_enough_resource(self, resources_map: Dict[ResourceName, Resource], resource_name: ResourceName) -> bool:
-        return resources_map.get(resource_name, 0).units >= self.resources_needed[
+        return resources_map[resource_name].get_units_count() >= self.resources_needed[
             resource_name] * Decimal('1.1')
 
     def _calculate_prosperity(self):

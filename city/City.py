@@ -6,7 +6,7 @@ from city.CityUpgradeStrategy import CityUpgradeStrategy
 from market.GlobalMarket import IGlobalMarket
 from market.LocalMarket import LocalMarket
 from market.ResourceName import ResourceName
-from price_modifiers.UtilityDemandPriceModifier import UtilityDemandPriceModifier
+from price_modifiers.SupplyDemandPriceModifier import SupplyDemandPriceModifier
 from workshop.Workshop import Workshop
 
 
@@ -19,6 +19,7 @@ class City:
     # - increases all production
     # - unlocks production of valuable goods
 
+    # TODO add city interface
     def __init__(
             self,
             name: str,
@@ -26,7 +27,7 @@ class City:
             global_market: IGlobalMarket,
             upgrade_strategy: CityUpgradeStrategy,
             production_boost: Dict[ResourceName, Factor],
-            workshops: List[Workshop] = []
+            workshops: List[Workshop]
     ):
         self.name = name
         self.local_market = local_market
@@ -36,11 +37,13 @@ class City:
         self.workshops = workshops
         self.neighbours = {}
 
+        self._set_production_origin_of_units()
+
         # TODO: move to some triggered function when city sets goal to upgrade lvl
         # TODO: create collection with available modifiers
         # TODO: planned modifiers: kingdom regulations
-        self.local_market.add_utility_demand_modifier(UtilityDemandPriceModifier(), ResourceName.Wood)
-        self.local_market.add_utility_demand_modifier(UtilityDemandPriceModifier(), ResourceName.Stone)
+        self.local_market.add_supply_demand_modifier(SupplyDemandPriceModifier(), ResourceName.Wood)
+        self.local_market.add_supply_demand_modifier(SupplyDemandPriceModifier(), ResourceName.Stone)
 
     def add_neighbour(self, city: 'City', distance: int):
         self.neighbours.update(
@@ -54,23 +57,23 @@ class City:
         city_a.add_neighbour(city_b, distance)
         city_b.add_neighbour(city_a, distance)
 
-    def update(self):
+    def update(self, current_tick: int):
         if self.upgrade_strategy.can_upgrade(self.local_market.resources_map):
             resource_needed = self.upgrade_strategy.upgrade()
             [workshop.upgrade() for workshop in self.workshops]
-            self.local_market.remove_resources(resource_needed)
+            self.local_market.remove_number_of_resources(resource_needed)
 
-        self.produce_resources()
+        self.produce_resources(current_tick)
         self.consume_resources()
         self.global_market.update()
-        self.local_market.update(self.upgrade_strategy.get_demand_of_resources())
+        self.local_market.update(self.upgrade_strategy.get_demand_of_resources(), current_tick)
 
-    def produce_resources(self):
+    def produce_resources(self, current_tick: int):
         for workshop in self.workshops:
             if workshop.can_produce(self.local_market.resources_map):
                 production_boost = self.production_boost.get(workshop.get_produced_resource_name(), Factor(Decimal(1)))
-                consumed_resources, produced_resources = workshop.produce(production_boost)
-                self.local_market.remove_resources(resource_units=consumed_resources)
+                consumed_resources, produced_resources = workshop.produce(production_boost, self, current_tick)
+                self.local_market.remove_number_of_resources(resource_units=consumed_resources)
                 self.local_market.add_resources(resource_units=produced_resources)
 
     def consume_resources(self):
@@ -87,7 +90,10 @@ class City:
             resource_name: round(base_consumption * (food_resources_units[resource_name] / all_food_units))
             for resource_name in self.FOOD_RESOURCES
         }
-        self.local_market.remove_resources(food_to_be_consumed)
+        self.local_market.remove_number_of_resources(food_to_be_consumed)
 
     def show_price_history(self):
         self.local_market.show_price_history(self.name)
+
+    def _set_production_origin_of_units(self):
+        self.local_market.set_produced_by_on_resource_units(self)

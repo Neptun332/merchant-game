@@ -1,8 +1,10 @@
-from typing import Tuple, Dict
+from typing import Tuple, Dict, List
 
 from Factor import Factor
+from city.City import City
 from market.Resource import Resource
 from market.ResourceName import ResourceName
+from market.Unit import Unit
 from workshop.Workshop import Workshop
 
 
@@ -24,8 +26,18 @@ class NotConsumingWorkshop(Workshop):
     def can_produce(self, resources_map: Dict[ResourceName, Resource]) -> bool:
         return True
 
-    def produce(self, production_boost: Factor) -> Tuple[Dict[ResourceName, int], Dict[ResourceName, int]]:
+    def produce(
+            self,
+            production_boost: Factor,
+            producer_city: City,
+            current_tick: int
+    ) -> Tuple[Dict[ResourceName, int], Dict[ResourceName, List[Unit]]]:
         return {}, {
-            self.resource_name_produced:
-                int(self.resource_units_produced * self.level * production_boost.value)
+            self.resource_name_produced: self._create_number_of_units(
+                number_of_units=self._calculate_number_of_units(production_boost),
+                producer_city=producer_city,
+                current_tick=current_tick,
+            )
         }
+
+
