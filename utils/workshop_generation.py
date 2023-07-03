@@ -1,3 +1,4 @@
+import sys
 from typing import List
 
 from market.ResourceName import ResourceName
@@ -12,11 +13,13 @@ def generate_workshops_for_city_a() -> List[Workshop]:
             resource_name_produced=ResourceName.Wood,
             resource_units_produced=1,
             level=3,
+            produced_unit_ticks_lifetime=sys.maxsize,
         ),
         NotConsumingWorkshop(
             resource_name_produced=ResourceName.Stone,
             resource_units_produced=1,
             level=1,
+            produced_unit_ticks_lifetime=sys.maxsize,
         ),
         NotConsumingWorkshop(
             resource_name_produced=ResourceName.Wheat,
@@ -37,11 +40,13 @@ def generate_workshops_for_city_b() -> List[Workshop]:
             resource_name_produced=ResourceName.Wood,
             resource_units_produced=1,
             level=1,
+            produced_unit_ticks_lifetime=sys.maxsize,
         ),
         NotConsumingWorkshop(
             resource_name_produced=ResourceName.Stone,
             resource_units_produced=1,
             level=3,
+            produced_unit_ticks_lifetime=sys.maxsize,
         ),
         NotConsumingWorkshop(
             resource_name_produced=ResourceName.Wheat,
@@ -67,11 +72,13 @@ def generate_workshops_for_city_c() -> List[Workshop]:
             resource_name_produced=ResourceName.Wood,
             resource_units_produced=1,
             level=1,
+            produced_unit_ticks_lifetime=sys.maxsize,
         ),
         NotConsumingWorkshop(
             resource_name_produced=ResourceName.Stone,
             resource_units_produced=1,
             level=1,
+            produced_unit_ticks_lifetime=sys.maxsize,
         ),
         NotConsumingWorkshop(
             resource_name_produced=ResourceName.Wheat,
@@ -82,6 +89,7 @@ def generate_workshops_for_city_c() -> List[Workshop]:
             resource_name_produced=ResourceName.GoldOre,
             resource_units_produced=1,
             level=3,
+            produced_unit_ticks_lifetime=sys.maxsize,
         ),
         ConsumingWorkshop(
             resource_name_produced=ResourceName.Gold,
@@ -89,6 +97,7 @@ def generate_workshops_for_city_c() -> List[Workshop]:
             resource_name_consumed=ResourceName.GoldOre,
             resource_units_consumed=1,
             level=1,
+            produced_unit_ticks_lifetime=sys.maxsize,
         ),
     ]
 
@@ -99,11 +108,13 @@ def generate_workshops_for_city_d() -> List[Workshop]:
             resource_name_produced=ResourceName.Wood,
             resource_units_produced=1,
             level=1,
+            produced_unit_ticks_lifetime=sys.maxsize,
         ),
         NotConsumingWorkshop(
             resource_name_produced=ResourceName.Stone,
             resource_units_produced=1,
             level=1,
+            produced_unit_ticks_lifetime=sys.maxsize,
         ),
         NotConsumingWorkshop(
             resource_name_produced=ResourceName.Wheat,
@@ -129,11 +140,13 @@ def generate_workshops_for_city_e() -> List[Workshop]:
             resource_name_produced=ResourceName.Wood,
             resource_units_produced=1,
             level=1,
+            produced_unit_ticks_lifetime=sys.maxsize,
         ),
         NotConsumingWorkshop(
             resource_name_produced=ResourceName.Stone,
             resource_units_produced=1,
             level=1,
+            produced_unit_ticks_lifetime=sys.maxsize,
         ),
         NotConsumingWorkshop(
             resource_name_produced=ResourceName.Wheat,

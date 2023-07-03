@@ -24,6 +24,6 @@ class ConsumingWorkshop(Workshop):
                 self.resource_name_produced: self._create_number_of_units(
                     number_of_units=self._calculate_number_of_units(production_boost),
                     producer_city=producer_city,
-                    current_tick=current_tick,
+                    unit_ttl=self._calculate_unit_ttl(current_tick),
                 )
             }

@@ -21,8 +21,8 @@ def generate_city_a(global_market: IGlobalMarket) -> City:
         global_market=global_market,
         upgrade_strategy=CityUpgradeStrategy(
             resources_needed={
-                ResourceName.Wood: 100,
-                ResourceName.Stone: 100
+                ResourceName.Wood: 200,
+                ResourceName.Stone: 200
             },
         ),
         production_boost={ResourceName.Wood: Factor(Decimal('1.2'))},
@@ -39,8 +39,8 @@ def generate_city_b(global_market: IGlobalMarket) -> City:
         global_market=global_market,
         upgrade_strategy=CityUpgradeStrategy(
             resources_needed={
-                ResourceName.Wood: 100,
-                ResourceName.Stone: 100
+                ResourceName.Wood: 200,
+                ResourceName.Stone: 200
             },
         ),
         production_boost={ResourceName.IronOre: Factor(Decimal('1.2'))},
@@ -57,8 +57,8 @@ def generate_city_c(global_market: IGlobalMarket) -> City:
         global_market=global_market,
         upgrade_strategy=CityUpgradeStrategy(
             resources_needed={
-                ResourceName.Wood: 100,
-                ResourceName.Stone: 100
+                ResourceName.Wood: 200,
+                ResourceName.Stone: 200
             },
         ),
         production_boost={ResourceName.Gold: Factor(Decimal('1.2'))},
@@ -75,8 +75,8 @@ def generate_city_d(global_market: IGlobalMarket) -> City:
         global_market=global_market,
         upgrade_strategy=CityUpgradeStrategy(
             resources_needed={
-                ResourceName.Wood: 100,
-                ResourceName.Stone: 100
+                ResourceName.Wood: 200,
+                ResourceName.Stone: 200
             },
         ),
         production_boost={ResourceName.Fish: Factor(Decimal('1.2'))},
@@ -93,8 +93,8 @@ def generate_city_e(global_market: IGlobalMarket) -> City:
         global_market=global_market,
         upgrade_strategy=CityUpgradeStrategy(
             resources_needed={
-                ResourceName.Wood: 100,
-                ResourceName.Stone: 100
+                ResourceName.Wood: 200,
+                ResourceName.Stone: 200
             },
         ),
         production_boost={ResourceName.Silk: Factor(Decimal('1.2'))},
