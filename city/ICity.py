@@ -1,7 +1,19 @@
 from abc import ABC, abstractmethod
 
+from market.ILocalMarket import ILocalMarket
+
 
 class ICity(ABC):
+
+    @abstractmethod
+    def __init__(
+            self,
+            name: str,
+            local_market: ILocalMarket
+    ):
+        self.name = name
+        self.local_market = local_market
+
     @abstractmethod
     def add_neighbour(self, city: 'ICity', distance: int):
         ...
@@ -17,4 +29,8 @@ class ICity(ABC):
 
     @abstractmethod
     def show_price_history(self):
+        ...
+
+    @abstractmethod
+    def create_theft_event(self):
         ...

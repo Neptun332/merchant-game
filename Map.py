@@ -2,22 +2,24 @@ from typing import Set
 
 from Kingdom import Kingdom
 from city.City import City
+from event_engine.IEventEngine import IEventEngine
 from market.GlobalMarket import IGlobalMarket
 from utils.city_generation import generate_city_a, generate_city_b, generate_city_c, generate_city_d, generate_city_e
 
 
 class Map:
 
-    def __init__(self, global_market: IGlobalMarket):
+    def __init__(self, global_market: IGlobalMarket, event_engine: IEventEngine):
         self._global_market = global_market
+        self._event_engine = event_engine
         self._create_hardcoded_kingdoms_with_cities()
 
     def _create_hardcoded_kingdoms_with_cities(self):
-        a = generate_city_a(self._global_market)
-        b = generate_city_b(self._global_market)
-        c = generate_city_c(self._global_market)
-        d = generate_city_d(self._global_market)
-        e = generate_city_e(self._global_market)
+        a = generate_city_a(self._global_market, self._event_engine)
+        b = generate_city_b(self._global_market, self._event_engine)
+        c = generate_city_c(self._global_market, self._event_engine)
+        d = generate_city_d(self._global_market, self._event_engine)
+        e = generate_city_e(self._global_market, self._event_engine)
 
         City.make_them_neighbours(a, b, 10)
         City.make_them_neighbours(a, c, 12)

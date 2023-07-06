@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from EventEngine import EventEngine
+from event_engine.EventEngine import EventEngine
 from Factor import Factor
 from GameEngine import GameEngine
 from Map import Map
@@ -21,9 +21,10 @@ if __name__ == "__main__":
         }
     )
 
+    event_engine = EventEngine()
     game_engine = GameEngine(
-        map=Map(global_market),
-        event_engine=EventEngine(),
+        map=Map(global_market, event_engine),
+        event_engine=event_engine,
         tick_rate=None,
         ticks_to_next_month=30,
         global_market=global_market

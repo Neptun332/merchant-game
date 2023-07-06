@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from enum import Enum, auto
 
+from Probability import Probability
+
 
 class EventStateEnum(Enum):
     NOT_TRIGGERED = auto()
@@ -19,5 +21,5 @@ class Event(ABC):
         pass
 
     @abstractmethod
-    def calculate_probability(self):
+    def get_probability(self) -> Probability:
         pass

@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 from city.ICity import ICity
+from market.ILocalMarket import ILocalMarket
 from market.Resource import Resource
 from market.ResourceName import ResourceName
 from market.Unit import Unit
@@ -13,7 +14,7 @@ from price_modifiers.IPriceModifier import IPriceModifier
 from price_modifiers.NoOpPriceModifier import NoOpPriceModifier
 
 
-class LocalMarket:
+class LocalMarket(ILocalMarket):
 
     def __init__(
             self,

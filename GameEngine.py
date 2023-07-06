@@ -3,9 +3,8 @@ import time
 from loguru import logger
 from matplotlib import pyplot as plt
 
-from EventEngine import EventEngine
+from event_engine.EventEngine import EventEngine
 from Map import Map
-from TreasureEvent import TreasureEventConfig
 from market.GlobalMarket import IGlobalMarket
 
 
@@ -23,10 +22,6 @@ class GameEngine:
         self.map = map
         self.event_engine = event_engine
         self.ticks_to_next_month = ticks_to_next_month
-        self.event_engine.create_city_event(
-            self.map.cities,
-            TreasureEventConfig((200, 300))
-        )
         self.tick = 1
         self.global_market = global_market
 
@@ -55,7 +50,7 @@ class GameEngine:
     def _daily_update(self):
         for city in self.map.cities:
             city.update(self.tick)
-        # self.event_engine.attempt_triggering_events()
+        self.event_engine.update()
 
     def _monthly_update(self):
         pass

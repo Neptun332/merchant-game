@@ -4,6 +4,9 @@ from typing import Dict, List
 from Factor import Factor
 from city.CityUpgradeStrategy import CityUpgradeStrategy
 from city.ICity import ICity
+from event_engine.IEventEngine import IEventEngine
+from event_engine.TheftEvent import TheftEvent
+from event_engine.config.BaseEventConfig import BaseEventConfig
 from market.GlobalMarket import IGlobalMarket
 from market.LocalMarket import LocalMarket
 from market.ResourceName import ResourceName
@@ -27,14 +30,15 @@ class City(ICity):
             global_market: IGlobalMarket,
             upgrade_strategy: CityUpgradeStrategy,
             production_boost: Dict[ResourceName, Factor],
-            workshops: List[Workshop]
+            workshops: List[Workshop],
+            event_engine: IEventEngine
     ):
-        self.name = name
-        self.local_market = local_market
+        super().__init__(name, local_market)
         self.global_market = global_market
         self.upgrade_strategy = upgrade_strategy
         self.production_boost = production_boost
         self.workshops = workshops
+        self.event_engine = event_engine
         self.neighbours = {}
 
         self._set_production_origin_of_units()
@@ -44,6 +48,8 @@ class City(ICity):
         # TODO: planned modifiers: kingdom regulations
         self.local_market.add_supply_demand_modifier(SupplyDemandPriceModifier(), ResourceName.Wood)
         self.local_market.add_supply_demand_modifier(SupplyDemandPriceModifier(), ResourceName.Stone)
+
+        self.create_theft_event()
 
     def add_neighbour(self, city: ICity, distance: int):
         self.neighbours.update(
@@ -70,6 +76,15 @@ class City(ICity):
 
     def show_price_history(self):
         self.local_market.show_price_history(self.name)
+
+    def create_theft_event(self):
+        self.event_engine.register_possible_event(
+            [TheftEvent(
+                city=self,
+                event_config=BaseEventConfig((10, 200), TheftEvent.DEFAULT_PROBABILITY),
+                event_engine=self.event_engine
+            ), ]
+        )
 
     def _produce_resources(self, current_tick: int):
         for workshop in self.workshops:
