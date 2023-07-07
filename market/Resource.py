@@ -25,6 +25,8 @@ class Resource:
 
     def remove_number_of_units(self, units_count: int):
         self.units = sorted(self.units, key=lambda x: x.ttl)
+        if not units_count:
+            pass
         del self.units[0:units_count]
 
     def add_price_modifier(self, price_modifier: IPriceModifier):

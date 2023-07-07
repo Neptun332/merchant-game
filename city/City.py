@@ -5,6 +5,7 @@ from Factor import Factor
 from city.CityUpgradeStrategy import CityUpgradeStrategy
 from city.ICity import ICity
 from event_engine.IEventEngine import IEventEngine
+from event_engine.PercentageTheftEvent import PercentageTheftEvent
 from event_engine.TheftEvent import TheftEvent
 from event_engine.config.BaseEventConfig import BaseEventConfig
 from market.GlobalMarket import IGlobalMarket
@@ -79,9 +80,9 @@ class City(ICity):
 
     def create_theft_event(self):
         self.event_engine.register_possible_event(
-            [TheftEvent(
+            [PercentageTheftEvent(
                 city=self,
-                event_config=BaseEventConfig((10, 200), TheftEvent.DEFAULT_PROBABILITY),
+                event_config=BaseEventConfig((10, 100), PercentageTheftEvent.DEFAULT_PROBABILITY),
                 event_engine=self.event_engine
             ), ]
         )
